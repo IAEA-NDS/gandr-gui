@@ -1,0 +1,23 @@
+CXX = $(shell wx-config --cxx)
+INC = -I include -I deps/cereal/include
+LIBS = -lz -ldl -lm -lX11 -lcairo
+
+PROGRAM = Gandrgui
+
+OBJECTS := $(patsubst %.cpp,%.o,$(wildcard *.cpp)) $(patsubst %.cpp,%.o,$(wildcard */*.cpp))
+
+
+# implementation
+
+.SUFFIXES:      .o .cpp
+
+.cpp.o :
+	$(CXX) $(INC) -c `wx-config --cxxflags --static=yes` -o $@ $<
+
+all:    $(PROGRAM)
+
+$(PROGRAM):     $(OBJECTS)
+	$(CXX) -o $(PROGRAM) $(OBJECTS) $(INC) $(LIBS) `wx-config --libs all --gl-libs all --static=yes`
+
+clean:
+	rm -f *.o $(PROGRAM) src/*o

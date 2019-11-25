@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{0C7699CB-B665-4CDE-884D-3023DCC4C95B}</ProjectGuid>
+    <RootNamespace>GandrGUI</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>GandrGUIVSProject</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>C:\Users\Jan Malec\Documents\Projects nucl\GandrGUI\deps\cereal\include;C:\Users\Jan Malec\Documents\Projects\wxWidgets\include\msvc;C:\Users\Jan Malec\Documents\Projects\wxWidgets\include;C:\Users\Jan Malec\Documents\Projects nucl\GandrGUI\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Jan Malec\Documents\Projects\wxWidgets\lib\vc_x64_lib\mswud;C:\Users\Jan Malec\Documents\Projects\wxWidgets\lib\vc_x64_lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>C:\Users\Jan Malec\Documents\Projects nucl\GandrGUI\deps\cereal\include;C:\Users\Jan Malec\Documents\Projects\wxWidgets\include\msvc;C:\Users\Jan Malec\Documents\Projects\wxWidgets\include;$(WindowsSDK_IncludePath);$(VC_IncludePath);C:\Users\Jan Malec\Documents\Projects nucl\GandrGUI\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Jan Malec\Documents\Projects\wxWidgets\lib\vc_x64_lib;C:\Users\Jan Malec\Documents\Projects\wxWidgets\lib\vc_x64_lib\mswu\wx\msw;$(LibraryPath)</LibraryPath>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>C:\Projekti\gandr-gui\deps\cereal\include;C:\Projekti\wxWidgets\include\msvc;C:\Projekti\wxWidgets\include;C:\Projekti\gandr-gui\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Projekti\wxWidgets\lib\vc_x64_lib\mswud;C:\Projekti\wxWidgets\lib\vc_x64_lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>C:\Users\Jan Malec\Documents\Projects nucl\GandrGUI\deps\cereal\include;C:\Users\Jan Malec\Documents\Projects\wxWidgets\include\msvc;C:\Users\Jan Malec\Documents\Projects\wxWidgets\include;$(WindowsSDK_IncludePath);$(VC_IncludePath);C:\Users\Jan Malec\Documents\Projects nucl\GandrGUI\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Jan Malec\Documents\Projects\wxWidgets\lib\vc_x64_lib;C:\Users\Jan Malec\Documents\Projects\wxWidgets\lib\vc_x64_lib\mswu\wx\msw;$(LibraryPath)</LibraryPath>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>wxbase31ud.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>wxbase31ud.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <SDLCheck>
+      </SDLCheck>
+      <ConformanceMode>false</ConformanceMode>
+      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NON_CONFORMING_SWPRINTFS=1;_SCL_SECURE_NO_WARNINGS=1;__WXMSW__;NDEBUG;_UNICODE;_WINDOWS;NOPCH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Jan Malec\Documents\Projects\wxWidgets\include\msvc;C:\Users\Jan Malec\Documents\Projects\wxWidgets\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>wxmsw31u_core.lib;wxbase31u.lib;wxtiff.lib;wxjpeg.lib;wxpng.lib;wxzlib.lib;wxregexu.lib;wxexpat.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;shlwapi.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;version.lib;wsock32.lib;wininet.lib</AdditionalDependencies>
+      <ShowProgress>LinkVerbose</ShowProgress>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <SDLCheck>
+      </SDLCheck>
+      <ConformanceMode>false</ConformanceMode>
+      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NON_CONFORMING_SWPRINTFS=1;_SCL_SECURE_NO_WARNINGS=1;__WXMSW__;NDEBUG;_UNICODE;_WINDOWS;NOPCH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Jan Malec\Documents\Projects\wxWidgets\include\msvc;C:\Users\Jan Malec\Documents\Projects\wxWidgets\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>wxmsw31u_core.lib;wxbase31u.lib;wxtiff.lib;wxjpeg.lib;wxpng.lib;wxzlib.lib;wxregexu.lib;wxexpat.lib;kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;winspool.lib;winmm.lib;shell32.lib;shlwapi.lib;comctl32.lib;ole32.lib;oleaut32.lib;uuid.lib;rpcrt4.lib;advapi32.lib;version.lib;wsock32.lib;wininet.lib</AdditionalDependencies>
+      <ShowProgress>LinkVerbose</ShowProgress>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\GandrGUIApp.cpp" />
+    <ClCompile Include="..\GandrGUIMain.cpp" />
+    <ClCompile Include="..\src\AddCovDialog.cpp" />
+    <ClCompile Include="..\src\AddMaterialWizard.cpp" />
+    <ClCompile Include="..\src\AddRunWizard.cpp" />
+    <ClCompile Include="..\src\AddSensDialog.cpp" />
+    <ClCompile Include="..\src\csv.cpp" />
+    <ClCompile Include="..\src\EditGridWindow.cpp" />
+    <ClCompile Include="..\src\EditIntegSensDialog.cpp" />
+    <ClCompile Include="..\src\ENDFReader.cpp" />
+    <ClCompile Include="..\src\EventListCtrl.cpp" />
+    <ClCompile Include="..\src\EventListPanel.cpp" />
+    <ClCompile Include="..\src\ExforCovDialog.cpp" />
+    <ClCompile Include="..\src\ExforIndexGridDialog.cpp" />
+    <ClCompile Include="..\src\ExforReader.cpp" />
+    <ClCompile Include="..\src\GandrSettingsFrame.cpp" />
+    <ClCompile Include="..\src\GanrunConfiguration.cpp" />
+    <ClCompile Include="..\src\gen_utils.cpp" />
+    <ClCompile Include="..\src\GlobalConfiguration.cpp" />
+    <ClCompile Include="..\src\GlobalSettingsDialog.cpp" />
+    <ClCompile Include="..\src\GridButton.cpp" />
+    <ClCompile Include="..\src\GridEditPanel.cpp" />
+    <ClCompile Include="..\src\IdefDialog.cpp" />
+    <ClCompile Include="..\src\InitSetupWizard.cpp" />
+    <ClCompile Include="..\src\sens_reader.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\GandrGUIApp.h" />
+    <ClInclude Include="..\GandrGUIMain.h" />
+    <ClInclude Include="..\include\AddCovDialog.h" />
+    <ClInclude Include="..\include\AddMaterialWizard.h" />
+    <ClInclude Include="..\include\AddRunWizard.h" />
+    <ClInclude Include="..\include\AddSensDialog.h" />
+    <ClInclude Include="..\include\csv.h" />
+    <ClInclude Include="..\include\EditGridWindow.h" />
+    <ClInclude Include="..\include\EditIntegSensDialog.h" />
+    <ClInclude Include="..\include\ENDFReader.h" />
+    <ClInclude Include="..\include\EventListCtrl.h" />
+    <ClInclude Include="..\include\EventListPanel.h" />
+    <ClInclude Include="..\include\ExforCovDialog.h" />
+    <ClInclude Include="..\include\ExforIndexGridDialog.h" />
+    <ClInclude Include="..\include\ExforReader.h" />
+    <ClInclude Include="..\include\GandrGrid.h" />
+    <ClInclude Include="..\include\GandrSettingsFrame.h" />
+    <ClInclude Include="..\include\GanrunConfiguration.h" />
+    <ClInclude Include="..\include\gen_utils.h" />
+    <ClInclude Include="..\include\GlobalConfiguration.h" />
+    <ClInclude Include="..\include\GlobalSettingsDialog.h" />
+    <ClInclude Include="..\include\GridButton.h" />
+    <ClInclude Include="..\include\GridEditPanel.h" />
+    <ClInclude Include="..\include\IdefDialog.h" />
+    <ClInclude Include="..\include\InitSetupWizard.h" />
+    <ClInclude Include="..\include\Isotopes.h" />
+    <ClInclude Include="..\include\sens_reader.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
