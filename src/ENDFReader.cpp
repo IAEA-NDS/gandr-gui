@@ -11,6 +11,7 @@
  **************************************************************/
 
 #include "ENDFReader.h"
+#include "gen_utils.h"
 
 
 ENDFReader::ENDFReader(std::string fileName) : fileName(fileName) {
@@ -23,11 +24,12 @@ void ENDFReader::read_cs(unsigned int mf, unsigned int mt, cs_data & data) {
     bool found_section = false;
     int line_no = 0;
     while (std::getline(enfile, line)) {
-		wxMessageBox(line);
+		//wxMessageBox(line);
         line_no += 1;
         if (line_no == 1) {
             try {
-                temp_data.NA = std::stof(line.substr(0, 11).c_str());
+				replace(line, "+", "e+");
+                temp_data.NA = wxAtof(line.substr(0, 11));
             }
             catch (...) {
                 wxMessageBox("Could not enter material number");

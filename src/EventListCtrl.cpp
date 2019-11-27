@@ -122,7 +122,8 @@ void CalculationList::runSelected() {
 		runs.at(c).inopt = index;
         runs.at(c).generate_input();
         outFile << runs.at(c).input_string;
-		index++;
+		if (runs.at(c).inopt != 0)
+			index++;
     }
     outFile.close();
     

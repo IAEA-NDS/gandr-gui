@@ -68,6 +68,7 @@ private:
     wxTextCtrl *gandMatnumTextCtrl;
     void onFinishEvent(wxWizardEvent& event);
     wxWizardPage *m_next;
+	std::map<int, int> endfnums;
 
     void onResize(wxSizeEvent& event) {
         Layout();

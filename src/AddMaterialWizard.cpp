@@ -10,10 +10,8 @@
  * License:   GPL-3
  **************************************************************/
 
-#ifndef ADDMATERIALWIZARD_H
-#define ADDMATERIALWIZARD_H
-
 #include "AddMaterialWizard.h"
+#include "EndfNumbers.h"
 
 
 AddMaterialWizard::AddMaterialWizard(wxWindow *parent, std::string fileName = "92235.pendf", imodes imode = STANDARDS, standards_experiment *experiment = nullptr)
@@ -99,7 +97,7 @@ StandardExpInitPage::StandardExpInitPage(wxWizard *parent) : wxWizardPageSimple(
     );
 
     wxString msg("Select integral or differential data");
-
+	elToMap(&endfnums);
     mainSizer->Add(
         new wxStaticText(this, wxID_ANY, msg),
         1, // No stretching
@@ -118,6 +116,8 @@ StandardExpInitPage::StandardExpInitPage(wxWizard *parent) : wxWizardPageSimple(
 void StandardExpInitPage::onFinishEvent(wxWizardEvent & event) {
     ENDFReader reader(wizard->fileName);
     wizard->experiment->mats = wxAtoi(matnumTextCtrl->GetValue());
+	auto pair = reverseLookup(&endfnums, wizard->experiment->mats);
+	wizard->experiment->nampl = pair.first;
     wizard->experiment->mts = wxAtoi(mteTextCtrl->GetValue());
     wizard->experiment->mtpl = wizard->experiment->mts;
     wizard->experiment->ismg = m_radio->GetSelection();
@@ -133,7 +133,7 @@ void StandardExpInitPage::onFinishEvent(wxWizardEvent & event) {
         }
 
         wizard->experiment->nps = wizard->csData.len;
-        wizard->experiment->nampl = wizard->csData.NA;
+        //wizard->experiment->nampl = wizard->csData.NA;
 
         if (!wizard->csData.len) {
             wxMessageBox("Reaction not found in supplied PENDF file.");
@@ -377,5 +377,3 @@ void setGridRowNumbers(wxGrid *grid, int no_rows) {
         grid->DeleteRows(0, std::abs(diff_row));
     return;
 }
-
-#endif

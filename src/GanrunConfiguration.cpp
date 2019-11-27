@@ -82,7 +82,7 @@ void GanrunConfiguration::genLabel() {
     case CLASSIC:
         runDesc = "Classic, ";
         runDesc += " mat = " + std::to_string(matnam);
-        runDesc += ", reaction = " + std::to_string(mte);
+        runDesc += ", reaction = " + std::to_string(std::abs(mte));
     
 	break;
 	case INTEGRAL:
@@ -94,8 +94,8 @@ void GanrunConfiguration::genLabel() {
 
 void GanrunConfiguration::GenerateReactions(std::ostringstream &stream) {
     for (auto r : reactions) {
-        stream << std::left << std::setw(7) << r.gan_no;
-        stream << std::left << std::setw(4) << r.mte;
+        stream << std::right << std::setw(5) << r.gan_no;
+        stream << std::right << std::setw(5) << r.mte;
         stream << "  " << r.label << std::endl;
         if (r.mte < 0) {
             for (int i = 0; i < r.composition.size(); i++) {
@@ -107,7 +107,6 @@ void GanrunConfiguration::GenerateReactions(std::ostringstream &stream) {
             stream << std::endl;
         }
     }
-    //stream << "/" << std::endl;
 }
 
 void GanrunConfiguration::GenerateExforCovData(std::ostringstream & stream) {
@@ -181,11 +180,12 @@ void GanrunConfiguration::generate_input() {
         grs << iprint << " " << iredo << " " << iloop << " " << xneg;
         grs << "/ Card 1, imode inopt ipick idef iprint iredo iloop xneg" << std::endl; // end card 1
 
-		grs << expdat; // << "/ Card 14, expdat" << std::endl; // end card 14
+		grs << expdat << std::endl; // << "/ Card 14, expdat" << std::endl; // end card 14
 
         nexp = exp_data.size();
         grs << nexp << " " << izott;
-        grs << "/ Card 15, nexp izott" << std::endl; // end card 15
+		grs << std::endl;
+		//grs << " / Card 15, nexp izott" << std::endl; // end card 15
 
         for (auto s : exp_data) {
             s.nlib = s.sens_data.size();
@@ -197,7 +197,8 @@ void GanrunConfiguration::generate_input() {
             grs << "/ Card 16, mats mts nps nexc nlib ismg" << std::endl; // end card 16
 
             grs << s.nampl << " " << s.mtpl;
-            grs << "/ Card 17, nampl matpl" << std::endl; // end card 17
+			grs << std::endl;
+			//grs << "/ Card 17, nampl matpl" << std::endl; // end card 17
 
             for (auto c : s.cov_data) {
                 grs << c.range.first << " " << c.range.second << " ";
@@ -259,7 +260,8 @@ void GanrunConfiguration::generate_input() {
 
         nexp = exp_data.size();
         grs << nexp << " " << izott;
-        grs << "/ Card 15, nexp izott" << std::endl; // end card 15
+		grs << std::endl;
+        //grs << "/ Card 15, nexp izott" << std::endl; // end card 15
 
         for (auto s : exp_data) {
             s.nlib = s.sens_data.size();
@@ -271,7 +273,8 @@ void GanrunConfiguration::generate_input() {
             grs << "/ Card 16, mats mts nps nexc nlib ismg" << std::endl; // end card 16
 
             grs << s.nampl << " " << s.mtpl;
-            grs << "/ Card 17, nampl matpl" << std::endl; // end card 17
+			grs << std::endl;
+			//grs << "/ Card 17, nampl matpl" << std::endl; // end card 17
 
             for (auto c : s.cov_data) {
                 grs << c.range.first << " " << c.range.second << " ";
@@ -387,8 +390,10 @@ void GanrunConfiguration::generate_input() {
     }
 
     grs << "EOF" << std::endl;
-    grs << "chmod u+x ./ganrun" << std::endl;
-    grs << "./ganrun" << std::endl << std::endl;
+	if (iloop == 0) {
+		grs << "chmod u+x ./ganrun" << std::endl;
+		grs << "./ganrun" << std::endl << std::endl;
+	}
 
     input_string = grs.str();
 }

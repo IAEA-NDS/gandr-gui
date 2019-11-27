@@ -84,4 +84,6 @@ std::string vector_to_short_string(std::vector<T> in_array) {
 
 bool isDouble(const std::string& s);
 
+bool replace(std::string& str, const std::string& from, const std::string& to);
+
 #endif
