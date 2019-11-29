@@ -38,7 +38,7 @@ class sensData {
 public:
 	SensType type;
 	void readSens(std::string fileName);
-	void writeSens(std::string fileName, wxArrayInt *checked);
+	void writeSens(std::string fileName, std::vector<int> *checked);
 	std::vector<sens> sensitivities;
 	std::vector<double> energyScale;
 

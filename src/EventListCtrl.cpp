@@ -73,10 +73,10 @@ void CalculationList::removeRun(int run_no) {
 void CalculationList::saveRuns() {
     wxFileDialog
         saveFileDialog(this, _("Save configuration"), "", "",
-            "Cereal files (*.cereal)|*.cereal", wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+            "Save files (*.sav)|*.sav", wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
     if (saveFileDialog.ShowModal() == wxID_CANCEL)
         return;     // the user changed idea...
-    std::ofstream os(std::string(saveFileDialog.GetPath()), std::ios::binary);
+    std::ofstream os(std::string(saveFileDialog.GetPath() + ".sav"), std::ios::binary);
     cereal::BinaryOutputArchive oarchive(os);
     oarchive(runs);
     os.close();
@@ -85,7 +85,7 @@ void CalculationList::saveRuns() {
 void CalculationList::loadRuns() {
     wxFileDialog
         loadFileDialog(this, _("Load configuration"), "", "",
-            "Cereal files (*.cereal)|*.cereal", wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+            "Cereal files (*.sav)|*.sav", wxFD_OPEN | wxFD_FILE_MUST_EXIST);
     if (loadFileDialog.ShowModal() == wxID_CANCEL)
         return;     // the user changed idea...
     int run_size = runs.size();
@@ -117,20 +117,44 @@ void CalculationList::runSelected() {
     wxArrayInt  checked;
     GetCheckedItems(checked);
     auto outFile = std::ofstream("run.k");
-	size_t index = 0;
+	size_t index = 0, totalCounter = 0;
     for (auto c : checked) {
 		runs.at(c).inopt = index;
-        runs.at(c).generate_input();
-        outFile << runs.at(c).input_string;
-		if (runs.at(c).inopt != 0)
+		if (runs.at(c).label != "Setup run") {
 			index++;
+			if (index == 1 && totalCounter == 1) {
+				runs.at(c).ipend = runs.at(checked.at(0)).ipend;
+				runs.at(c).imoc = runs.at(checked.at(0)).imoc;
+			}
+			if (runs.at(c).imode == INTEGRAL) {
+				std::string fn = "dicer_" + std::to_string(runs.at(c).inopt) + ".dat";
+				if (wxFileExists(fn) == true) {
+					wxMessageDialog dialog(this,
+						"File " + fn + " exist, copy to " + fn + ".b",
+						"file exists", wxYES_NO);
+					if (dialog.ShowModal() == wxID_YES) {
+						wxRenameFile(fn, fn + ".b", true);
+						runs.at(c).sData.writeSens(fn, &runs.at(c).checkedInts);
+					}
+				}
+				else {
+					runs.at(c).sData.writeSens(fn, &runs.at(c).checkedInts);
+				}
+
+			}
+		}
+		totalCounter++;
+
+		// Actually generate the input
+		runs.at(c).generate_input();
+		outFile << runs.at(c).input_string;
     }
     outFile.close();
     
     Singleton* s = Singleton::getInstance();
     if (s->runGandr) {
 
-        wxShell("./run.k");
+        wxShell("chmod +x run.k && ./run.k");
     }
 }
 

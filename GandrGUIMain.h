@@ -16,7 +16,7 @@
 #include <wx/wx.h>
 #endif
 
-#include "GandrguiApp.h"
+#include "GandrGUIApp.h"
 #include "EventListPanel.h"
 
 

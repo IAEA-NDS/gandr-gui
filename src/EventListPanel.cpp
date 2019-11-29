@@ -83,15 +83,24 @@ void EventListPanel::runRunButtonClick(wxCommandEvent& event) {
 void EventListPanel::onListItemDoubleClicked(wxCommandEvent &event) {
     auto config_no = event.GetInt();
     GanrunConfiguration config = evList->runs.at(config_no);
-    GanrunConfiguration *initConfig;
-    if (evList->runs.size() > 0)
-        initConfig = &evList->runs.at(0);
-    else
-        initConfig = new GanrunConfiguration();
-    AddRunWizard wizard(this, &config, initConfig);
-    wizard.RunWizard(wizard.GetFirstPage());
-    if (wizard.finished) {
-        evList->runs.at(config_no) = config;
-        evList->SetString(config_no, config.label);
-    }
+	if (config.label != "Setup run") {
+		GanrunConfiguration *initConfig;
+		if (evList->runs.size() > 0)
+			initConfig = &evList->runs.at(0);
+		else
+			initConfig = new GanrunConfiguration();
+		AddRunWizard wizard(this, &config, initConfig);
+		wizard.RunWizard(wizard.GetFirstPage());
+		if (wizard.finished) {
+			evList->runs.at(config_no) = config;
+			evList->SetString(config_no, config.label);
+		}
+	}
+	else {
+		auto config = evList->getInitConfig();
+		InitSetupWizard wizard(this, &config);
+		wizard.RunWizard(wizard.GetFirstPage());
+		if (wizard.finished)
+			evList->updateFirstRun(config);
+	}
 }

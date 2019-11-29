@@ -167,7 +167,7 @@ wxSetExforPage::wxSetExforPage(wxWizard *parent) : wxWizardPageSimple(parent) {
 
     mainSizer->Add(leftSizer, 1, wxEXPAND);
 
-    leftSizer->Add(new wxStaticText(this, wxID_ANY, "Material number\n10000*A+Z"));
+    leftSizer->Add(new wxStaticText(this, wxID_ANY, "ZA number\n10000*A+Z"));
     leftSizer->Add(materialBox);
 
     leftSizer->Add(new wxStaticText(this, wxID_ANY, "Reaction MT number"));
@@ -238,11 +238,11 @@ wxSetExforPage::wxSetExforPage(wxWizard *parent) : wxWizardPageSimple(parent) {
     else
         exfor_from_zott = false;
 
-    if (wxFileExists(fileName)) {
+    if (wxFileExists(fileName) && wizard->config->imode == CLASSIC) {
         wizard->eReader->fileName = fileName;
-        readExperiments();
+        //readExperiments();
+		loadValues();
     }
-    loadValues();
 }
 
 void wxSetExforPage::autofill_matnam_mte() {
@@ -806,20 +806,37 @@ wxAddIntegralPage::wxAddIntegralPage(wxWizard *parent) : wxWizardPageSimple(pare
 	checklist = new wxCheckListBox(this, wxID_ANY);
 	checklist->SetFont(wxFont(12, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL));
 
+	wxBoxSizer* bMeasSizer = new wxBoxSizer(wxHORIZONTAL);
+	bMeasSizer->Add(new wxStaticText(this, wxID_ANY, wxString("Measured - reference ")), 1, wxALL, 5);
+	bmeasBox = new wxTextCtrl(this, wxID_ANY, std::to_string(wizard->config->bmeas));
+	bMeasSizer->Add(bmeasBox);
+	bMeasSizer->Add(new wxStaticText(this, wxID_ANY, wxString("Deviation ")), 1, wxALL, 5);
+	stdBox = new wxTextCtrl(this, wxID_ANY, std::to_string(wizard->config->std));
+	bMeasSizer->Add(stdBox, wxLEFT);
+	mainSizer->Add(bMeasSizer);
+
+	wxBoxSizer* matnamSizer = new wxBoxSizer(wxHORIZONTAL);
+	matnamBox = new wxTextCtrl(this, wxID_ANY, std::to_string(wizard->config->matnam));
+	matnamSizer->Add(new wxStaticText(this, wxID_ANY, wxString("ZA")), 1, wxALL, 5);
+	matnamSizer->Add(matnamBox);
+	mainSizer->Add(matnamSizer);
+
 	mainSizer->Add(checklist, 1, wxEXPAND);
 
-	wxArrayString names;
+	
+	
 	if (wizard->config->sData.sensitivities.size() > 0) {
 		for (auto s : wizard->config->sData.sensitivities) {
 			names.Add(s.name);
 		}
 		checklist->Set(names);
 		for (auto i : wizard->config->checkedInts) {
-			//checklist->Toggle(i);
-			// TODO finish
+			if (i < names.size()) {
+				checklist->Check(i);
+			}
 		}
 	}
-
+	
 	Connect(FileBrowseButton->GetId(), wxEVT_COMMAND_BUTTON_CLICKED,
 		wxCommandEventHandler(wxAddIntegralPage::OpenFileButtonCLicked));
 	Connect(IntegFileBox->GetId(), wxEVT_COMMAND_TEXT_ENTER,
@@ -833,12 +850,26 @@ wxAddIntegralPage::wxAddIntegralPage(wxWizard *parent) : wxWizardPageSimple(pare
 void wxAddIntegralPage::listboxToggled(wxCommandEvent& event) {
 	if (checklist->IsChecked(event.GetInt())) {
 		std::string name = std::string(checklist->GetString(event.GetInt()).mb_str());
+		if (fillData.za == 1) {
+			fillData.za = wxAtoi(matnamBox->GetValue());
+		}
+		wizard->config->checkedInts.at(event.GetInt()) = 1;
 		SensConfigDialog dialog(&wizard->config->intReacs[event.GetInt()], 
 			name, &fillData);
-		if (dialog.ShowModal() == wxID_OK) {}
+		if (dialog.ShowModal() == wxID_OK) {
+			names[event.GetInt()] = wxString(wizard->config->intReacs[event.GetInt()].rnam);
+			wizard->config->sData.sensitivities[event.GetInt()].name = wxString(wizard->config->intReacs[event.GetInt()].rnam);
+			checklist->Set(names);
+			for (size_t i = 0; i < names.size(); i++) {
+				if (wizard->config->checkedInts.at(i))
+					checklist->Check(i);
+			}
+		}
 		else {
 			event.Skip();
 		}
+	} else {
+		wizard->config->checkedInts.at(event.GetInt()) = 0;
 	}
 }
 
@@ -862,7 +893,6 @@ void wxAddIntegralPage::refreshSensitivities(std::string fileName) {
 	if (wxFileExists(fileName)) {
 		wizard->config->sData.sensitivities.clear();
 		wizard->config->sData.readSens(fileName);
-		wxArrayString names;
 		for (auto s : wizard->config->sData.sensitivities) {
 			names.Add(s.name);
 		}
@@ -873,31 +903,28 @@ void wxAddIntegralPage::refreshSensitivities(std::string fileName) {
 		for (size_t i = 0; i < size; i++) {
 			wizard->config->intReacs.at(i).rnam = std::string(names.Item(i).mb_str());
 		}
+		wizard->config->checkedInts.clear();
+		wizard->config->checkedInts.assign(wizard->config->intReacs.size(), 0);
+		for (int c : checkboxes)
+			wizard->config->checkedInts.at(c) = 1;
 	}
 }
 
 void wxAddIntegralPage::onFinishEvent(wxWizardEvent& event) {
 	wizard->config->nreac = wizard->config->intReacs.size();
-	checklist->GetCheckedItems(wizard->config->checkedInts);
+	checklist->GetCheckedItems(checkboxes);
+	wizard->config->checkedInts.clear();
+	wizard->config->checkedInts.assign(wizard->config->intReacs.size(), 0);
+	for (int c : checkboxes)
+		wizard->config->checkedInts.at(c) = 1;
+	wizard->config->bmeas = wxAtof(bmeasBox->GetValue());
+	wizard->config->std =   wxAtof(stdBox->GetValue());
+	wizard->config->matnam = wxAtof(matnamBox->GetValue());
 
 	if (wizard->config->nreac == 0)
 		event.Veto();
 	else {
-		if (wxFileExists("dicer.dat") == true) {
-			wxMessageDialog dialog(this,
-				"File dicer.dat exist, copy to dicer.dat.b",
-				"dicer.dat exists", wxYES_NO);
-			if (dialog.ShowModal() == wxID_YES) {
-				wxRenameFile("dicer.dat", "dicer.dat.b", true);
-				wizard->config->sData.writeSens("dicer.dat", &wizard->config->checkedInts);
-			}
-			else {
-				event.Veto();
-			}
-		}
-		else {
-			wizard->config->sData.writeSens("dicer.dat", &wizard->config->checkedInts);
-		}
+		
 		wizard->finished = true;
 	}
 		

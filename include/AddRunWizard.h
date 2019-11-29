@@ -243,7 +243,12 @@ private:
 	wxTextCtrl* IntegFileBox;
 	wxButton* FileBrowseButton;
 	wxCheckListBox* checklist;
+	wxTextCtrl* bmeasBox;
+	wxTextCtrl* stdBox;
+	wxTextCtrl* matnamBox;
 	std::string fileName = "./dice_in.dat";
+	wxArrayInt checkboxes;
+	wxArrayString names;
 
 
 };

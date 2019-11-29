@@ -80,12 +80,12 @@
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Projekti\gandr-gui\deps\cereal\include;C:\Projekti\wxWidgets\include\msvc;C:\Projekti\wxWidgets\include;C:\Projekti\gandr-gui\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Projekti\gandr-gui-github\deps\cereal\include;C:\Projekti\wxWidgets\include\msvc;C:\Projekti\wxWidgets\include;C:\Projekti\gandr-gui-github\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Projekti\wxWidgets\lib\vc_x64_lib\mswud;C:\Projekti\wxWidgets\lib\vc_x64_lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Users\Jan Malec\Documents\Projects nucl\GandrGUI\deps\cereal\include;C:\Users\Jan Malec\Documents\Projects\wxWidgets\include\msvc;C:\Users\Jan Malec\Documents\Projects\wxWidgets\include;$(WindowsSDK_IncludePath);$(VC_IncludePath);C:\Users\Jan Malec\Documents\Projects nucl\GandrGUI\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Jan Malec\Documents\Projects\wxWidgets\lib\vc_x64_lib;C:\Users\Jan Malec\Documents\Projects\wxWidgets\lib\vc_x64_lib\mswu\wx\msw;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Projekti\gandr-gui-github\deps\cereal\include;C:\Projekti\wxWidgets\include\msvc;C:\Projekti\wxWidgets\include;C:\Projekti\gandr-gui-github\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Projekti\wxWidgets\lib\vc_x64_lib\mswud;C:\Projekti\wxWidgets\lib\vc_x64_lib;$(LibraryPath)</LibraryPath>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -173,6 +173,7 @@
     <ClCompile Include="..\src\csv.cpp" />
     <ClCompile Include="..\src\EditGridWindow.cpp" />
     <ClCompile Include="..\src\EditIntegSensDialog.cpp" />
+    <ClCompile Include="..\src\EndfNumbers.cpp" />
     <ClCompile Include="..\src\ENDFReader.cpp" />
     <ClCompile Include="..\src\EventListCtrl.cpp" />
     <ClCompile Include="..\src\EventListPanel.cpp" />
@@ -200,6 +201,7 @@
     <ClInclude Include="..\include\csv.h" />
     <ClInclude Include="..\include\EditGridWindow.h" />
     <ClInclude Include="..\include\EditIntegSensDialog.h" />
+    <ClInclude Include="..\include\EndfNumbers.h" />
     <ClInclude Include="..\include\ENDFReader.h" />
     <ClInclude Include="..\include\EventListCtrl.h" />
     <ClInclude Include="..\include\EventListPanel.h" />

@@ -17,7 +17,7 @@
 #pragma hdrstop
 #endif //__BORLANDC__
 
-#include "GandrguiMain.h"
+#include "GandrGUIMain.h"
 #include "GlobalConfiguration.h"
 #include "GlobalSettingsDialog.h"
 

@@ -97,10 +97,10 @@ void GanrunConfiguration::GenerateReactions(std::ostringstream &stream) {
         stream << std::right << std::setw(5) << r.gan_no;
         stream << std::right << std::setw(5) << r.mte;
         stream << "  " << r.label << std::endl;
-        if (r.mte < 0) {
+        if (r.composition.size() > 1) {
             for (int i = 0; i < r.composition.size(); i++) {
-                stream << std::setw(4) << r.composition.at(i) << " ";
-                if (i % 20 == 0 && i > 0 && r.composition.size() % 20 != 0) {
+				stream << std::setw(4) << r.composition.at(i);
+                if (i % 19 == 0 && i > 0 && r.composition.size() % 19 != 0) {
                     stream << std::endl;
                 }
             }
@@ -151,11 +151,11 @@ void GanrunConfiguration::generate_input() {
     if (iloop)
         grs << "# Loop over the materials with iloop=1" << std::endl;
 
-    if (imoc) {
+    if (imoc && label == "Setup run") {
         //Re-use custom COV
         grs << "cp " << covFileName << " " << s->zottDir << "/modcov/" << matnam << std::endl;
     }
-    if (ipend) {
+    if (ipend && label == "Setup run") {
         //Re-use custom pendf
         grs << "cp " << pendfFileName << " ./" << matnam << ".pendf" << std::endl;
 		grs << "cp " << matnam << ".pendf " << s->zottDir << "/pendf/" << matnam << std::endl;
@@ -165,6 +165,10 @@ void GanrunConfiguration::generate_input() {
         //Copy exfor file
         grs << "cp " << exforFileName << " ./" << matnam << ".exfor" << std::endl;
     }
+
+	if (imode == INTEGRAL) {
+		grs << "cp " << "dicer_" + std::to_string(inopt) + ".dat " << " " << "dicer.dat" << std::endl;
+	}
 
     //grs << "ganrun" << std::endl;
     if (inopt == 0)
@@ -190,19 +194,19 @@ void GanrunConfiguration::generate_input() {
         for (auto s : exp_data) {
             s.nlib = s.sens_data.size();
             s.nexc = s.cov_data.size();
-            grs << s.mats << " " << s.mts << " ";
+            grs << " " << s.mats << " " << s.mts << " ";
             grs << s.nps << " " << s.nexc << " ";
             grs << " " << s.nlib << " ";
             grs << s.ismg;
             grs << "/ Card 16, mats mts nps nexc nlib ismg" << std::endl; // end card 16
 
-            grs << s.nampl << " " << s.mtpl;
-			grs << std::endl;
+            grs << "  " << s.nampl << " " << s.mtpl;
+			grs <<  std::endl;
 			//grs << "/ Card 17, nampl matpl" << std::endl; // end card 17
 
             for (auto c : s.cov_data) {
-                grs << c.range.first << " " << c.range.second << " ";
-                grs << c.covfc << " " << c.irelfc << " ";
+                grs << "  " << c.range.first << " " << c.range.second << " ";
+                grs << "  " << c.covfc << " " << c.irelfc << " ";
                 grs << "/ Card 18, range1 range2 covfc irelfc" << std::endl; // end card 18
             }
             
@@ -223,10 +227,13 @@ void GanrunConfiguration::generate_input() {
             }
 
         if (inopt == 0) {
-            grs << igrid << " " << imoc << " " << inmt5 << " ";
-            grs << iltest;
-            grs << "/ Card 22, igrid imoc inmt5 iltest" << std::endl; // end card 22
+            //grs << igrid << " " << imoc << " " << inmt5 << " ";
+            //grs << iltest;
+            //grs << "/ Card 22, igrid imoc inmt5 iltest" << std::endl; // end card 22
+			grs << "/\n /\n";
         }
+
+		grs << std::endl;
         break;
     case MIXTURE:
         grs << imode << " " << inopt << " " << ipick << " " << idef << " ";
@@ -368,17 +375,31 @@ void GanrunConfiguration::generate_input() {
 		grs << iprint << " " << iredo << " " << iloop << " " << xneg;
 		grs << "/ imode inpot ipick idef iprint iredo iloop xnerg, card 1" << std::endl; // end card 1
 
+		if (inopt == 0) {
+			grs << matnam << " " << matnam << "/ matnam mtplot \n";
+			grs << igrid << " " << imoc << " " << ipend << "/ igrid imoc ipend \n";
+		}
+
 		// CARD 38 only itype=1 sensitivities supported at this point
+		nreac = 0;
+		for (size_t i = 0; i < checkedInts.size(); i++) {
+			if (checkedInts.at(i) == 1)
+				nreac++;
+		}
 		grs << nreac << " " << itype << "/ nreac itype, card 38" << std::endl;
 
 		// CARDs 39-42
-		for (auto s : intReacs) {
-			grs  << s.za << " " << s.mtd << "/ matna mtd" << std::endl;
-			grs << "  " << s.matna << " " << s.mfd << " "
-				<< s.temp << " " << s.sigz << "/ matd, mfd, temp, sigz\n";
+		size_t ind = 0;
+		for (size_t i = 0; i < checkedInts.size(); i++) {
+			if (checkedInts.at(i)) {
+			auto s = intReacs.at(i);
+			grs  << s.za << " " << s.rnam << std::endl;
+			grs << "  " << s.matna << " " << s.mfd << " " << s.mtd << " "
+				<< s.temp << " " << s.sigz << "/ matd, mfd, mtd, temp, sigz\n";
 			grs << "  " << s.iusegp << " " << s.igrtop << " " <<
 				s.igrid << " / iusegp igrtop igrid" << std::endl;
 			grs << "  " << s.iwt << " " << s.np << "/ iwt np" << std::endl;
+			}
 		}
 		
 		// CARD 43, imode 15
@@ -389,7 +410,13 @@ void GanrunConfiguration::generate_input() {
 		
     }
 
-    grs << "EOF" << std::endl;
+    grs << "EOF\n" << std::endl;
+
+	if (imode == STANDARDS) {
+		grs << "rm sepost.in && touch sepost.in" << std::endl;
+		grs << "touch mgbse.dat" << std::endl;
+	}
+
 	if (iloop == 0) {
 		grs << "chmod u+x ./ganrun" << std::endl;
 		grs << "./ganrun" << std::endl << std::endl;

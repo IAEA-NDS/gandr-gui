@@ -11,6 +11,7 @@
  **************************************************************/
 
 #include "EditIntegSensDialog.h"
+#include "EndfNumbers.h"
 
 
 SensConfigDialog::SensConfigDialog(intReac *data, std::string name, intReac* fillData)
@@ -29,7 +30,7 @@ SensConfigDialog::SensConfigDialog(intReac *data, std::string name, intReac* fil
 	wxStaticText* tempLabel   = new wxStaticText(this, wxID_ANY, "Temp: ");
 
 
-	if (data->za == 1) {
+	if (data->za == 1 || data->matna == 1) {
 		data->za = fillData->za;
 		data->matna = fillData->matna;
 		data->temp = fillData->temp;
@@ -65,6 +66,8 @@ SensConfigDialog::SensConfigDialog(intReac *data, std::string name, intReac* fil
 
     Connect(confirmButton->GetId(), wxEVT_COMMAND_BUTTON_CLICKED,
         wxCommandEventHandler(SensConfigDialog::onConfirm));
+	Connect(azLabel->GetId(), wxEVT_COMMAND_TEXT_ENTER,
+		wxCommandEventHandler(SensConfigDialog::zaEntered));
 	fData = fillData;
     SetSizerAndFit(mainSizer);
     SetSize(wxSize(600, 400));
@@ -73,14 +76,23 @@ SensConfigDialog::SensConfigDialog(intReac *data, std::string name, intReac* fil
 
 void SensConfigDialog::onConfirm(wxCommandEvent& event) {
 	data->rnam = std::string(nameTextBox->GetValue().c_str());
-	data->za = std::stoi(std::string(zaTextBox->GetValue().c_str()));
-	data->matna = std::stoi(std::string(matnamTextBox->GetValue().c_str()));
-	data->mtd = std::stoi(std::string(reacnoTextBox->GetValue().c_str()));
-	data->temp = std::stoi(std::string(tempTextBox->GetValue().c_str()));	
-	if (fData->za == 1 ) {
+	data->za = wxAtoi(zaTextBox->GetValue().c_str());
+	data->matna = wxAtoi(matnamTextBox->GetValue().c_str());
+	data->mtd = wxAtoi(reacnoTextBox->GetValue().c_str());
+	data->temp = wxAtoi(tempTextBox->GetValue().c_str());	
+	if (fData->za == 1 || fData->matna == 0) {
 		fData->za = data->za;
 		fData->matna = data->matna;
 		fData->temp = data->temp;
 	}
 	wxDialog::EndModal(wxID_OK);
+}
+
+void SensConfigDialog::zaEntered(wxCommandEvent& event)
+{
+	if (endfnums.size() == 0)
+		elToMap(&endfnums);
+	wxMessageBox("ZA entered event");
+	auto pair = reverseLookup(&endfnums, wxAtoi(zaTextBox->GetValue()));
+	matnamTextBox->SetValue(std::to_string(pair.first));
 }

@@ -30,7 +30,9 @@ private:
 	wxTextCtrl *tempTextBox;
 
 	wxButton *confirmButton;
+	std::map<int, int> endfnums;
 
     void onConfirm(wxCommandEvent& event);
+	void zaEntered(wxCommandEvent& event);
 
 };

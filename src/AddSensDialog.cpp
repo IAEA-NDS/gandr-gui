@@ -44,7 +44,7 @@ SensDialog::SensDialog(const wxString & title, additional_sens_data *sensData)
     wxBoxSizer *bottomSizer = new wxBoxSizer(wxHORIZONTAL);
     confirmButton = new wxButton(this, wxID_ANY, "Confirm");
     mainSizer->Add(bottomSizer, 1, wxEXPAND, 5);
-    topLeftSizer->Add(confirmButton, 0, wxALIGN_LEFT);
+    
 
     topLeftSizer->Add(new wxStaticText(this, wxID_ANY,
         "Set all elements to value"));
@@ -52,6 +52,8 @@ SensDialog::SensDialog(const wxString & title, additional_sens_data *sensData)
     topLeftSizer->Add(setAllTextBox);
     setAllButton = new wxButton(this, wxID_ANY, "Set");
     topLeftSizer->Add(setAllButton);
+
+	topLeftSizer->Add(confirmButton, 0, wxALIGN_LEFT);
 
     
     Connect(confirmButton->GetId(), wxEVT_COMMAND_BUTTON_CLICKED,

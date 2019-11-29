@@ -39,7 +39,7 @@ enum imodes {
     CLASSIC = 12,
     PRODUCT = 13,
     C5 = 14,
-    INTEGRAL = 20
+    INTEGRAL = 15
 };
 
 enum idefs {
@@ -210,6 +210,7 @@ public:
     std::string covFileName;
     std::string zottDir;
 	std::string diceFIleName = "dice.dat";
+	std::string comment;
 
     //CARD 1 imode 10 11 12 13 14
     imodes imode = CLASSIC;
@@ -302,15 +303,15 @@ public:
 	//CARD 43, imode 15
 	double bref = 1.0;
 
-	wxArrayInt checkedInts;
+	std::vector<int> checkedInts;
 
 	//CARD 43, imode 15
-	double bmeas = 1.0; // measured integral datum, provided as the
+	double bmeas = 0.01; // measured integral datum, provided as the
 						// difference between the measurementand the
 						// reference value, bref, given on card 38.
 
 	//CARD 44, imode 15
-	double std = 0.; //Standard deviation from bmeas 
+	double std = 0.002; //Standard deviation from bmeas 
 
 
     template <class Archive>
@@ -337,7 +338,8 @@ public:
             threshName,
 			nreac, itype,
 			intReacs, sData,
-			bref, bmeas, std
+			bref, bmeas, std,
+			checkedInts, comment
             );
     }
 

@@ -33,7 +33,7 @@ InitSetupWizard::InitSetupWizard(wxWindow *parent, GanrunConfiguration *config) 
     m_reactions->SetNext(m_gridEdit);
     m_gridEdit->SetPrev(m_reactions);
     threshMatName = config->threshName;
-    SetPageSize(wxSize(530, 750));
+    SetPageSize(wxSize(530, 650));
 }
 
 void InitSetupWizard::UpdateReactions() {

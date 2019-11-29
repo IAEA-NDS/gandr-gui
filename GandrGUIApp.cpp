@@ -20,8 +20,8 @@
 #define WXUSINGDLL
 #endif
 
-#include "GandrguiApp.h"
-#include "GandrguiMain.h"
+#include "GandrGUIApp.h"
+#include "GandrGUIMain.h"
 
 IMPLEMENT_APP(GandrguiApp);
 
