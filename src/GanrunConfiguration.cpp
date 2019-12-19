@@ -111,10 +111,11 @@ void GanrunConfiguration::GenerateReactions(std::ostringstream &stream) {
 
 void GanrunConfiguration::GenerateExforCovData(std::ostringstream & stream) {
     int edited_no = 0;
-    for (edited_no = 0; edited_no < ecov_data.size(); edited_no++) {
-        if (ecov_data.at(edited_no).edited)
-            break;
+    for (int i = 0; i < ecov_data.size(); i++) {
+		if (ecov_data.at(i).edited)
+			edited_no = i;
     }
+
     if (edited_no >= ecov_data.size())
         return;
     ecov_data.at(edited_no).iglobl = 1;
@@ -128,6 +129,7 @@ void GanrunConfiguration::GenerateExforCovData(std::ostringstream & stream) {
             for (auto x : d.xsys)
                 stream << x << " ";
         }
+		stream << "/ card 8 and 9, inca covmin irelco isys iglobl, xsys" << std::endl; //card 8, exfor cov data TODO
     }
 }
 
@@ -260,7 +262,7 @@ void GanrunConfiguration::generate_input() {
 
         if (ecov_data.size()) {
             GenerateExforCovData(grs);
-            grs << "/ card 8 and 9, inca covmin irelco isys iglobl, xsys" << std::endl; //card 8, exfor cov data TODO
+            
         }
 
         grs << expdat << "/ Card 14, expdat" << std::endl; // end card 14

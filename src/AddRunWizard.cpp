@@ -158,6 +158,7 @@ void wxRunSelectPage::onFinishEvent(wxWizardEvent & event) {
 
 wxSetExforPage::wxSetExforPage(wxWizard *parent) : wxWizardPageSimple(parent) {
     wizard = dynamic_cast<AddRunWizard*>(parent);
+	fileName = wizard->config->exforFileName;
 
     wxBoxSizer *mainSizer = new wxBoxSizer(wxHORIZONTAL);
     
@@ -172,7 +173,6 @@ wxSetExforPage::wxSetExforPage(wxWizard *parent) : wxWizardPageSimple(parent) {
 
     leftSizer->Add(new wxStaticText(this, wxID_ANY, "Reaction MT number"));
     leftSizer->Add(reactionBox);
-    //leftSizer->Add(ipickSelectBox);
 
     wxString exforChoices[2];
     exforChoices[0] = "Deduce reaction def. from MT";
@@ -241,6 +241,7 @@ wxSetExforPage::wxSetExforPage(wxWizard *parent) : wxWizardPageSimple(parent) {
     if (wxFileExists(fileName) && wizard->config->imode == CLASSIC) {
         wizard->eReader->fileName = fileName;
         //readExperiments();
+		wxMessageBox("Loading values");
 		loadValues();
     }
 }
@@ -276,7 +277,6 @@ void wxSetExforPage::onFinishEvent(wxWizardEvent & event) {
     }
 
     wizard->config->listex.clear();
-    //wizard->config->thinning.clear();
 
     wizard->config->listex.resize(static_cast<size_t>(checked.Last()) + 1, 0);
     wizard->config->thinning.resize(static_cast<size_t>(checked.Last()) + 1, 1);
@@ -319,6 +319,7 @@ void wxSetExforPage::onFinishEvent(wxWizardEvent & event) {
     auto titles_array = wizard->eReader->getTitles();
     std::vector<int> indexes;
     std::vector<std::string> titles;
+	auto energies = wizard->eReader->getEnergies();
     indexes.push_back(0);
     for (size_t i = 0; i < checked.GetCount(); i++) {
             indexes.push_back(indexes.back() + lens.at(checked[i]));
@@ -326,6 +327,7 @@ void wxSetExforPage::onFinishEvent(wxWizardEvent & event) {
     }
     exforCovPage->index_array = indexes;
     exforCovPage->title_array = titles;
+	exforCovPage->energy_array = energies;
     exforCovPage->imode = wizard->config->imode;
 
     if (exforDefRadioBox->GetSelection() == 1)
@@ -575,7 +577,7 @@ wxSetExforCovPage::wxSetExforCovPage(wxWizard *parent) : wxWizardPageSimple(pare
 }
 
 void wxSetExforCovPage::onViewIndexButtonClicked(wxCommandEvent &event) {
-    ExforIndexGridFrame *indexGrid = new ExforIndexGridFrame(this, index_array, title_array);
+    ExforIndexGridFrame *indexGrid = new ExforIndexGridFrame(this, index_array, title_array, energy_array);
     indexGrid->Show(true);
 }
 

@@ -19,7 +19,7 @@ class ExforIndexGridFrame : public wxDialog
 {
 public:
     ExforIndexGridFrame(wxWindow *parent, std::vector<int> &index_array, 
-        std::vector<std::string> &titles_array);
+        std::vector<std::string> &titles_array, std::vector<std::pair<double, double>>& energies);
 private:
     wxGrid *grid;
 

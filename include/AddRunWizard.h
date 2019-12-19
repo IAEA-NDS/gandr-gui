@@ -159,6 +159,7 @@ public:
     void onFinishEvent(wxWizardEvent &event);
     std::vector<int> index_array;
     std::vector<std::string> title_array;
+	std::vector<std::pair<double, double>> energy_array;
     wxBoxSizer *mainSizer;
 
     /* In case of imode_11, we have to check if 

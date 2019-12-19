@@ -20,7 +20,7 @@ GlobalSettingsDialog::GlobalSettingsDialog(wxWindow *parent)
 
 
     wxStaticText *text = new wxStaticText(this, wxID_ANY,
-        "Set path to the ZOTTVL directorz");
+        "Set path to the ZOTTVL directory");
     mainSizer->Add(text);
 
     wxBoxSizer *zottSizer = new wxBoxSizer(wxHORIZONTAL);
@@ -48,6 +48,8 @@ GlobalSettingsDialog::GlobalSettingsDialog(wxWindow *parent)
 void GlobalSettingsDialog::onConfirm(wxCommandEvent & event) {
     Singleton* s = Singleton::getInstance();
     s->zottDir = zottTextPathCtrl->GetValue();
+	zottTextPathCtrl->SetValue(s->zottDir);
+	wxDialog::EndModal(wxID_OK);
 }
 
 void GlobalSettingsDialog::onBrowse(wxCommandEvent & event) {
@@ -60,5 +62,6 @@ void GlobalSettingsDialog::onBrowse(wxCommandEvent & event) {
     else {
         Singleton* s = Singleton::getInstance();
         s->zottDir = openFolderDialog.GetPath();
+		zottTextPathCtrl->SetValue(s->zottDir);
     }
 }

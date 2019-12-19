@@ -37,7 +37,7 @@ void ExforExperiment::from_title(std::string title) {
 
 void ExforExperiment::data_from_line(std::string line) {
     auto float_res = valFromString<double>(line);
-    if (float_res.size() == 6) {
+    if (float_res.size() == 6 && float_res.at(0) != 0) {
         energy.push_back(float_res.at(0));
         d_energy.push_back(std::max(float_res.at(1), float_res.at(2)));
         value.push_back(float_res.at(3));
@@ -57,7 +57,9 @@ void ExforReader::read() {
         if (line.size()) {
             if (line.size() > 67 || new_exp) {
                 if (current->author.size()) {
-                    experiments.push_back(*current);
+					/*We only care about experiments with at least 1 data point!*/
+					if (current->energy.size())
+						experiments.push_back(*current);
                     delete current;
                     current = new ExforExperiment();
                     new_exp = false;
@@ -73,7 +75,7 @@ void ExforReader::read() {
             new_exp = true;
         }
     }
-    if (current->author.size()) {
+    if (current->author.size() && current->energy.size()) {
         experiments.push_back(*current);
         delete current;
     }
@@ -118,4 +120,14 @@ std::vector<int> ExforReader::getIndexes() {
         indexes.push_back(indexes.back() + len);
     indexes.erase(indexes.begin());
     return indexes;
+}
+
+std::vector<std::pair<double, double>> ExforReader::getEnergies()
+{
+	std::vector<std::pair<double, double>> pairs;
+	for (auto e : experiments) {
+		if (e.energy.size())
+			pairs.push_back(std::make_pair(e.energy.back(), e.energy.front()));
+	}
+	return pairs;
 }

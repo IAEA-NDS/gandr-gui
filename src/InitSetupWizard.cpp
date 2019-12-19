@@ -33,7 +33,7 @@ InitSetupWizard::InitSetupWizard(wxWindow *parent, GanrunConfiguration *config) 
     m_reactions->SetNext(m_gridEdit);
     m_gridEdit->SetPrev(m_reactions);
     threshMatName = config->threshName;
-    SetPageSize(wxSize(530, 650));
+    SetPageSize(wxSize(530, 450));
 }
 
 void InitSetupWizard::UpdateReactions() {
@@ -327,9 +327,14 @@ ScrolledWidgetsPane::ScrolledWidgetsPane(wxWindow* parent, wxWindowID id, std::a
             mtBoxes.push_back(new wxTextCtrl(this, wxID_ANY, std::to_string(reactions->at(i).mte)));
         else {
             std::stringstream ss;
-            for (auto mt : reactions->at(i).composition) {
-                ss << mt << " ";
-            }
+			if (reactions->at(i).composition.size() == 0) {
+				ss << '0';
+			}
+			else {
+				for (auto mt : reactions->at(i).composition) {
+					ss << mt << " ";
+				}
+			}
             mtBoxes.push_back(new wxTextCtrl(this, wxID_ANY, ss.str()));
         }
         gs->Add(gandrNumbers.back());

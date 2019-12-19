@@ -19,6 +19,7 @@
 #include <fstream>
 #include <sstream>
 #include <algorithm> 
+#include <utility>
 #include "wx/arrstr.h"
 #include <wx/msgdlg.h>
 #include "csv.h"
@@ -58,6 +59,7 @@ public:
     wxArrayString getTitles();
     std::vector<int> getLengths();
     std::vector<int> getIndexes();
+	std::vector<std::pair<double, double>> getEnergies();
 };
 
 #endif

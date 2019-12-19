@@ -80,12 +80,12 @@
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Projekti\gandr-gui-github\deps\cereal\include;C:\Projekti\wxWidgets\include\msvc;C:\Projekti\wxWidgets\include;C:\Projekti\gandr-gui-github\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Projekti\wxWidgets\lib\vc_x64_lib\mswud;C:\Projekti\wxWidgets\lib\vc_x64_lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\Projekti\gandr-gui\deps\cereal\include;E:\Projekti\wxWidgets\include\msvc;E:\Projekti\wxWidgets\include;E:\Projekti\gandr-gui\include;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\Projekti\wxWidgets\lib\vc_x64_lib\mswud;E:\Projekti\wxWidgets\lib\vc_x64_lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Projekti\gandr-gui-github\deps\cereal\include;C:\Projekti\wxWidgets\include\msvc;C:\Projekti\wxWidgets\include;C:\Projekti\gandr-gui-github\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Projekti\wxWidgets\lib\vc_x64_lib\mswud;C:\Projekti\wxWidgets\lib\vc_x64_lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\Projekti\gandr-gui\deps\cereal\include;E:\Projekti\wxWidgets\include\msvc;E:\Projekti\wxWidgets\include;E:\Projekti\gandr-gui\include;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\Projekti\wxWidgets\lib\vc_x64_lib\mswud;E:\Projekti\wxWidgets\lib\vc_x64_lib;$(LibraryPath)</LibraryPath>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -149,7 +149,7 @@
       </SDLCheck>
       <ConformanceMode>false</ConformanceMode>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_DEPRECATE=1;_CRT_NON_CONFORMING_SWPRINTFS=1;_SCL_SECURE_NO_WARNINGS=1;__WXMSW__;NDEBUG;_UNICODE;_WINDOWS;NOPCH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\Jan Malec\Documents\Projects\wxWidgets\include\msvc;C:\Users\Jan Malec\Documents\Projects\wxWidgets\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\Projekti\wxWidgets\include\msvc;E:\Projekti\wxWidgets\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
