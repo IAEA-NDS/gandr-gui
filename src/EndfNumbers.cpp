@@ -553,7 +553,7 @@ std::pair<int, int> reverseLookup(std::map<int, int>* map, int key) {
 	auto it = std::find_if(map->begin(), map->end(), [key](const std::pair<int, int>& p) {
 		return p.second == key;
 		});
-	if (it == map->end()) { /*value not found*/ }
+	if (it == map->end()) { return std::pair<int, int>{0, 0}; }
 
 	else {
 		std::pair<int, int> v = *it;

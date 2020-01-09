@@ -17,6 +17,8 @@
 #pragma hdrstop
 #endif //__BORLANDC__
 
+#include "wx/richtext/richtextctrl.h"
+
 #include "GandrGUIMain.h"
 #include "GlobalConfiguration.h"
 #include "GlobalSettingsDialog.h"
@@ -56,7 +58,7 @@ EVT_MENU(idMenuSave, GandrguiFrame::OnSave)
 EVT_MENU(idMenuPref, GandrguiFrame::OnPref)
 EVT_MENU(idMenuQuit, GandrguiFrame::OnQuit)
 EVT_MENU(idMenuAbout, GandrguiFrame::OnAbout)
-//EVT_BUTTON(ID_BUTTON_ADD, EventListPanel::AddButtonClick)
+EVT_MENU(idMenuDocs, GandrguiFrame::OnDocs)
 END_EVENT_TABLE()
 
 GandrguiFrame::GandrguiFrame(wxFrame *frame, const wxString& title)
@@ -83,7 +85,8 @@ GandrguiFrame::GandrguiFrame(wxFrame *frame, const wxString& title)
     mbar->Append(fileMenu, _("&File"));
 
     wxMenu* helpMenu = new wxMenu(_T(""));
-    helpMenu->Append(idMenuAbout, _("&About\tF1"), _("Show info about this application"));
+    helpMenu->Append(idMenuDocs, _("&Documentation"), _("Show info available documentation"));
+    helpMenu->Append(idMenuAbout, _("&About"), _("Show info about this application"));
     mbar->Append(helpMenu, _("&Help"));
 
     SetMenuBar(mbar);
@@ -91,9 +94,9 @@ GandrguiFrame::GandrguiFrame(wxFrame *frame, const wxString& title)
 
 #if wxUSE_STATUSBAR
     // create a status bar with some information about the used wxWidgets version
-    CreateStatusBar(2);
-    SetStatusText("In-development software", 0);
-    SetStatusText(wxbuildinfo(short_f), 1);
+    //CreateStatusBar(2);
+    //SetStatusText("In-development software", 0);
+    //SetStatusText(wxbuildinfo(short_f), 1);
 #endif // wxUSE_STATUSBAR
 
     Singleton* s = Singleton::getInstance();
@@ -144,6 +147,27 @@ void GandrguiFrame::OnQuit(wxCommandEvent &event) {
 }
 
 void GandrguiFrame::OnAbout(wxCommandEvent &event) {
-    wxString msg = wxbuildinfo(long_f);
-    wxMessageBox(msg, _("GANDR User Interface, development version"));
+    // wxString msg = wxbuildinfo(long_f);
+    wxMessageBox(("GANDR User Interface, version 1.0.\n9.1.2020, Vienna"));
+}
+
+void GandrguiFrame::OnDocs(wxCommandEvent &event) {
+    wxDialog *dialog = new wxDialog(this, wxID_ANY, "Documentation");
+    wxRichTextCtrl *text = new  wxRichTextCtrl(dialog, wxID_ANY, wxEmptyString, wxDefaultPosition,
+    wxSize(400, 200));
+    wxBoxSizer *BoxSizer = new wxBoxSizer(wxHORIZONTAL);
+    text->SetEditable(false);
+    text->WriteText("The documentation can be located on the official website:\n");
+    text->BeginURL("");
+    text->BeginTextColour(wxColour(0, 0, 255));
+    text->BeginUnderline();
+    text->WriteText("https://www-nds.iaea.org/gandr/GandrGuiUserManual.pdf");
+    text->EndUnderline();
+    text->EndTextColour();
+    text->EndURL();
+    text->WriteText("For the source code consult the official GitHub website.\n");
+    text->Update();
+    BoxSizer->Add(text);
+    dialog->SetSizerAndFit(BoxSizer);
+    dialog->ShowModal();
 }

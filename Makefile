@@ -16,7 +16,7 @@ OBJECTS := $(patsubst %.cpp,%.o,$(wildcard *.cpp)) $(patsubst %.cpp,%.o,$(wildca
 all:    $(PROGRAM)
 
 $(PROGRAM):     $(OBJECTS)
-	$(CXX) -o $(PROGRAM) $(OBJECTS) $(INC) `wx-config --libs`
+	$(CXX) -o $(PROGRAM) $(OBJECTS) $(INC) `wx-config --libs std,richtext`
 
 clean:
 	rm -f *.o $(PROGRAM) src/*o

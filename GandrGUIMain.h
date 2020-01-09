@@ -34,7 +34,8 @@ private:
         idMenuLoad = 1001,
         idMenuSave = 1002,
         idMenuPref = 1004,
-        idMenuAbout
+        idMenuAbout,
+        idMenuDocs
     };
     void OnClose(wxCloseEvent& event);
     void OnLoad(wxCommandEvent & event);
@@ -42,6 +43,7 @@ private:
     void OnPref(wxCommandEvent & event);
     void OnQuit(wxCommandEvent& event);
     void OnAbout(wxCommandEvent& event);
+    void OnDocs(wxCommandEvent& event);
     DECLARE_EVENT_TABLE()
 };
 

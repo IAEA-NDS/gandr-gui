@@ -32,12 +32,15 @@ public:
     wxButton *initSetupButton;
     wxButton *removeRunButton;
     wxButton *runRunButton;
+    wxButton *saveConfButton;
+    wxButton *loadConfButton;
 
     void AddButtonClick(wxCommandEvent& event);
     void InitButtonClick(wxCommandEvent& event);
     void RemoveButtonClick(wxCommandEvent& event);
-
     void runRunButtonClick(wxCommandEvent & event);
+    void saveButtonClick(wxCommandEvent & event);
+    void loadButtonClick(wxCommandEvent & event);
 
     void onListItemDoubleClicked(wxCommandEvent & event);
 

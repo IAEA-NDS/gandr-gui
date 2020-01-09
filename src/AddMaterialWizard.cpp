@@ -1,5 +1,5 @@
 /***************************************************************
- * Name:      AddRunWizard.cpp
+ * Name:      AddMaterialWizard.cpp
  * Desc.:     This code is part of the software GANDR GUI,
  *            developed to provide a user friendly interface to
  *            some of the functions of GANDR software.
