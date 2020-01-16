@@ -28,14 +28,15 @@ EventListPanel::EventListPanel(wxPanel *parent) : wxPanel(parent, wxID_ANY) {
     loadConfButton = new wxButton(this, wxID_ANY, wxT("Load conf"));
     saveConfButton = new wxButton(this, wxID_ANY, wxT("Save conf"));
 
-    hbox2->Add(addRunButton, 0, wxRIGHT);
-    hbox2->Add(removeRunButton, 0, wxRIGHT);
-    hbox2->Add(initSetupButton, 0, wxRIGHT);
-    hbox2->Add(runRunButton, 0, wxRIGHT);
-    hbox2->Add(saveConfButton, 0, wxRIGHT);
-    hbox2->Add(loadConfButton, 0, wxRIGHT);
+    hbox2->Add(addRunButton, 0, 0);
+    hbox2->Add(removeRunButton, 0, 0);
+    hbox2->Add(initSetupButton, 0, 0);
+    hbox2->Add(runRunButton, 0, 0);
+    hbox2->Add(saveConfButton, 0, 0);
+    hbox2->Add(loadConfButton, 0, 0);
     vbox->Add(hbox2);
-    this->SetSizer(vbox);
+    SetSizer(vbox);
+    
 
     Connect(addRunButton->GetId(), wxEVT_COMMAND_BUTTON_CLICKED,
         wxCommandEventHandler(EventListPanel::AddButtonClick));
@@ -46,9 +47,9 @@ EventListPanel::EventListPanel(wxPanel *parent) : wxPanel(parent, wxID_ANY) {
     Connect(runRunButton->GetId(), wxEVT_COMMAND_BUTTON_CLICKED,
         wxCommandEventHandler(EventListPanel::runRunButtonClick));
     Connect(saveConfButton->GetId(), wxEVT_COMMAND_BUTTON_CLICKED,
-        wxCommandEventHandler(EventListPanel::loadButtonClick));
-    Connect(loadConfButton->GetId(), wxEVT_COMMAND_BUTTON_CLICKED,
         wxCommandEventHandler(EventListPanel::saveButtonClick));
+    Connect(loadConfButton->GetId(), wxEVT_COMMAND_BUTTON_CLICKED,
+        wxCommandEventHandler(EventListPanel::loadButtonClick));
     Connect(evList->GetId(), wxEVT_LISTBOX_DCLICK,
         wxCommandEventHandler(EventListPanel::onListItemDoubleClicked));
 }

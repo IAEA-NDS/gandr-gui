@@ -316,7 +316,7 @@ ScrolledWidgetsPane::ScrolledWidgetsPane(wxWindow* parent, wxWindowID id, std::a
     gs = new wxFlexGridSizer(26, 3, 5, 5);
     gs->Add(new wxStaticText(this, wxID_ANY, "No."));
     gs->Add(new wxStaticText(this, wxID_ANY, "Label"));
-    gs->Add(new wxStaticText(this, wxID_ANY, "mt"));
+    gs->Add(new wxStaticText(this, wxID_ANY, "mtref"));
     for (int i = 0; i < reactions->size(); i++) {
         gandrNumbers.push_back(new wxStaticText(this, wxID_ANY, std::to_string(i + 1)));
         nameBoxes.push_back(new wxTextCtrl(this, wxID_ANY, reactions->at(i).label));

@@ -69,10 +69,10 @@ GandrguiFrame::GandrguiFrame(wxFrame *frame, const wxString& title)
     wxBoxSizer *BoxSizerLeft = new wxBoxSizer(wxVERTICAL);
     eventPanel = new EventListPanel(panel);
 
-    BoxSizerH->Add(BoxSizerLeft, 1, wxEXPAND, 10);
     BoxSizerLeft->Add(eventPanel, 1, wxEXPAND, 10);
-
-    panel->SetSizer(BoxSizerH);
+    BoxSizerH->Add(BoxSizerLeft, 1, wxEXPAND, 10);
+    BoxSizerH->SetSizeHints(this);
+    panel->SetSizerAndFit(BoxSizerH);
 
 #if wxUSE_MENUS
     // create a menu bar
