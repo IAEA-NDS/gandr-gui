@@ -12,6 +12,7 @@
 #include "GanrunConfiguration.h"
 #include "GlobalConfiguration.h"
 #include <iomanip>
+#include <regex>
 #include <assert.h>
 #include "gen_utils.h"
 #include "wx/wx.h" //remove this
@@ -150,6 +151,11 @@ exfor_cov_data GanrunConfiguration::GetCovData(int i) {
 void GanrunConfiguration::generate_input() {
     std::ostringstream grs;
 	Singleton* s = Singleton::getInstance();
+
+    if (comment != ""){
+        grs << "# " << std::regex_replace(comment, std::regex("\n"), "\n# ") << std::endl;
+    }
+
     if (iloop)
         grs << "# Loop over the materials with iloop=1" << std::endl;
 

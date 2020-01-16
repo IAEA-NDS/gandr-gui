@@ -100,17 +100,17 @@ wxRunSelectPage::wxRunSelectPage(wxWizard *parent) : wxWizardPageSimple(parent) 
     m_next = wizard->GetNextPage(CLASSIC);
 
 
-    wxString msg("Option \"Exfor data\" allows you to use differential "
+    wxString msg("\n\nOption \"Exfor data\" allows you to use differential "
         "data in computational format.\n"
         "Choose \"Standards data\" to provide standards in ENDF format.\n"
         "Selecting \"Integral data\" fitting of experiment data "
-        "with custom sensitivities.");
+        "with custom sensitivities.\n\n");
 
     mainSizer->Add(
         new wxStaticText(this, wxID_ANY, msg),
         1, // No stretching
         wxALIGN_LEFT | wxEXPAND,
-        5 // Border
+        10 // Border
     );
 
     mainSizer->Add(
@@ -123,7 +123,12 @@ wxRunSelectPage::wxRunSelectPage(wxWizard *parent) : wxWizardPageSimple(parent) 
     xnegTextCtrl = new wxTextCtrl(this, wxID_ANY,
         std::to_string(wizard->config->xneg));
     mainSizer->Add(xnegTextCtrl, 0, wxALIGN_TOP);
-    mainSizer->Add(0, 1, wxEXPAND);
+    //mainSizer->Add(0, 1, wxEXPAND);
+
+    commentBox = new wxTextCtrl(this, wxID_ANY,
+     wizard->config->comment, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE);
+    mainSizer->Add(commentBox, 2, wxEXPAND);
+    mainSizer->SetSizeHints(this);
 
     Bind(wxEVT_WIZARD_BEFORE_PAGE_CHANGED, &wxRunSelectPage::onFinishEvent, this);
     Bind(wxEVT_SIZE, &wxRunSelectPage::onResize, this);
@@ -153,6 +158,7 @@ void wxRunSelectPage::onFinishEvent(wxWizardEvent & event) {
 
     std::string textval = std::string(xnegTextCtrl->GetValue());
     wizard->config->xneg = std::stof(textval);
+    wizard->config->comment = std::string(commentBox->GetValue());
 }
 
 

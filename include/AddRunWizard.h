@@ -83,6 +83,7 @@ public:
     virtual wxWizardPage *GetPrev() const override {
         return wizard->GetFirstPage();
     }
+    wxTextCtrl *commentBox;
 
 
 private:
