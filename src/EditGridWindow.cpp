@@ -34,8 +34,8 @@ GridEditDialog::GridEditDialog(const wxString & title, std::array<int, GRID_LEN>
     //bottomSizer->Add(0, 1, wxEXPAND);
     bottomSizer->Add(new wxStaticText(this, wxID_ANY, 
     "Left-clicking on a point will result in a new point between "
-    "the ckliked point and the next existing opint.\n"
-    "Right-clicking the point will remove the point from the grid - the point will color white."));
+    "the clicked point and the next existing point.\n"
+    "Right-clicking the point will remove the point from the grid. The change is indicated by the point turning white."));
     bottomSizer->Add(confirmButton, 0, wxALIGN_RIGHT);
 
     Connect(wxID_OK, wxEVT_COMMAND_BUTTON_CLICKED,
