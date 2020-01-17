@@ -32,6 +32,10 @@ GridEditDialog::GridEditDialog(const wxString & title, std::array<int, GRID_LEN>
     // the button is lost when placed on the bottom.
     // TODO: Investigate and fix
     //bottomSizer->Add(0, 1, wxEXPAND);
+    bottomSizer->Add(new wxStaticText(this, wxID_ANY, 
+    "Left-clicking on a point will result in a new point between "
+    "the ckliked point and the next existing opint.\n"
+    "Right-clicking the point will remove the point from the grid - the point will color white."));
     bottomSizer->Add(confirmButton, 0, wxALIGN_RIGHT);
 
     Connect(wxID_OK, wxEVT_COMMAND_BUTTON_CLICKED,

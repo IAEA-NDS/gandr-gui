@@ -389,7 +389,6 @@ wxGridEditPage::wxGridEditPage(wxWizard * parent) : wxWizardPageSimple(parent) {
     }
     mainSizer->Add(gridRadioBox);
     wxBoxSizer *thinSizer = new wxBoxSizer(wxHORIZONTAL);
-    mainSizer->Add(thinSizer);
     wxArrayString choicesYESNO;
 	choicesYESNO.Add("No");
 	choicesYESNO.Add("Yes");
@@ -407,7 +406,9 @@ wxGridEditPage::wxGridEditPage(wxWizard * parent) : wxWizardPageSimple(parent) {
 		thinValue->Enable(false);
     }
     thinSizer->Add(thinRadioBox);
+    thinSizer->Add(thText);
     thinSizer->Add(thinValue);
+    mainSizer->Add(thinSizer);
 
 
     SetSizerAndFit(mainSizer);
@@ -452,10 +453,13 @@ void wxGridEditPage::onRadioBox(wxCommandEvent & event) {
     if (gridRadioBox->GetSelection() < 3) {
         wizard->config->igrid = gridRadioBox->GetSelection() + 1;
 		thinValue->Enable(false);
-		thinValue->SetValue("0");
+        wizard->config->thin = 0;
+        thinRadioBox->SetSelection(0);
+        thinValue->SetValue(std::to_string(0));
     }
     else {
 		wizard->config->thin = 0;
+        thinValue->Enable(false);
         GridEditDialog grid_dialog("Edit grid", &wizard->config->iflex);
         if (grid_dialog.ShowModal() == wxID_OK) {
             wizard->config->igrid = 4;
