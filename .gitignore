@@ -4,3 +4,7 @@
 /GandrGUIVSProject/dicer.dat.b
 /.vscode
 *.o
+*.make
+*.cmake
+build
+Gandrgui

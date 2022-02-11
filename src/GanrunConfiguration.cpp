@@ -101,7 +101,7 @@ void GanrunConfiguration::GenerateReactions(std::ostringstream &stream) {
         if (r.composition.size() > 1) {
             for (int i = 0; i < r.composition.size(); i++) {
 				stream << std::setw(4) << r.composition.at(i);
-                if (i % 19 == 0 && i > 0 && r.composition.size() % 19 != 0) {
+                if ((i+1) % 20 == 0 && i > 0 && r.composition.size() != i+1) {
                     stream << std::endl;
                 }
             }
