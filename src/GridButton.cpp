@@ -97,6 +97,7 @@ void gridButton::mouseDown(wxMouseEvent& event) {
     pressedDown = true;
     paintNow();
 }
+
 void gridButton::mouseReleased(wxMouseEvent& event) {
     pressedDown = false;
     paintNow();
@@ -105,6 +106,7 @@ void gridButton::mouseReleased(wxMouseEvent& event) {
     ProcessWindowEvent(evt);
     //wxMessageBox(wxT("You pressed a custom button"));
 }
+
 void gridButton::mouseLeftWindow(wxMouseEvent& event) {
     if (pressedDown)
     {

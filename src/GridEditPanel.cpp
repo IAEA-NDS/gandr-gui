@@ -64,7 +64,7 @@ void GridEditPanel::render(wxDC&  dc) {
     for (int i = 0; i < GRID_LEN; i++) {
 		if (iflex[i] <= 0) {
 			dc.SetBrush(*wxWHITE_BRUSH);
-            gButtons[i]->Enable(false);
+            //gButtons[i]->Enable(false);
 			gButtons[i]->setZero(true);
 		}
         else if (iflex[i] > 1) {
@@ -98,6 +98,7 @@ wxPoint GridEditPanel::etox(double energy, wxPoint offset = wxPoint(0, 0)) {
 
 void GridEditPanel::buttonProc(int button, int action) {
     // Check for limits, the last button does nothing
+    //std::cout << "button: " << button << " action: " << action << std::endl;
     if (button >= GRID_LEN || button < 0)
         return;
     if (action > 0 && iflex[button] < 10) {
@@ -114,6 +115,7 @@ void GridEditPanel::buttonProc(int button, int action) {
 
     Refresh();
     Update();
+    return;
 }
 
 void GridEditPanel::onButtonPressed(wxCommandEvent &event) {
