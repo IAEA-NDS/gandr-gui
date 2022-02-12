@@ -82,6 +82,7 @@ private:
 
     std::string PENDFFileName = "./92235.pendf";
     std::string COVFileName = "./92235.cov";
+    wxTextCtrl *commentBox;
 
     virtual wxWizardPage *GetNext() const override {
         int reacSelection = 0;

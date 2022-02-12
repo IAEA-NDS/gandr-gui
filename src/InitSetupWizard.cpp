@@ -33,6 +33,7 @@ InitSetupWizard::InitSetupWizard(wxWindow *parent, GanrunConfiguration *config) 
     m_reactions->SetNext(m_gridEdit);
     m_gridEdit->SetPrev(m_reactions);
     threshMatName = config->threshName;
+
     SetPageSize(wxSize(530, 450));
 }
 
@@ -169,6 +170,14 @@ wxInitFilesPage::wxInitFilesPage(wxWizard *parent) : wxWizardPageSimple(parent) 
     reacSizer->Add(ReacSetupBox[0], 1, wxEXPAND | wxALL);
     reacSizer->Add(reacEditSizer, 1, wxEXPAND | wxALL);
     mainSizer->Add(reacSizer);
+
+    commentBox = new wxTextCtrl(this, wxID_ANY,
+     wizard->config->comment, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE);
+
+
+    wxStaticText *commentText = new wxStaticText(this, wxID_ANY, "Add a comment to the run:");
+    mainSizer->Add(commentText, 0, wxALL, 1);
+    mainSizer->Add(commentBox, 0, wxEXPAND | wxALL, 10);
     
     if (wizard->config->igrid >= 0)
         ReacSetupBox[0]->SetValue(true);
@@ -276,6 +285,7 @@ void wxInitFilesPage::onNextEvent(wxWizardEvent & event) {
         wxMessageBox("Please enter a valid material name.");
         event.Veto();
     }
+    wizard->config->comment = commentBox->GetValue();
     wizard->UpdateReactions();
 }
 

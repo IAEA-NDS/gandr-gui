@@ -125,6 +125,9 @@ wxRunSelectPage::wxRunSelectPage(wxWizard *parent) : wxWizardPageSimple(parent) 
     mainSizer->Add(xnegTextCtrl, 0, wxALIGN_TOP);
     //mainSizer->Add(0, 1, wxEXPAND);
 
+
+    wxStaticText *commentText = new wxStaticText(this, wxID_ANY, "Add a comment to the run:");
+    mainSizer->Add(commentText, 0, wxALL, 1);
     commentBox = new wxTextCtrl(this, wxID_ANY,
      wizard->config->comment, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE);
     mainSizer->Add(commentBox, 2, wxEXPAND);
