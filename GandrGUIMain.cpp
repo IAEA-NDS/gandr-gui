@@ -154,7 +154,7 @@ void GandrguiFrame::OnAbout(wxCommandEvent &event) {
 void GandrguiFrame::OnDocs(wxCommandEvent &event) {
     wxDialog *dialog = new wxDialog(this, wxID_ANY, "Documentation");
     wxRichTextCtrl *text = new  wxRichTextCtrl(dialog, wxID_ANY, wxEmptyString, wxDefaultPosition,
-    wxSize(400, 200));
+    wxSize(600, 300));
     wxBoxSizer *BoxSizer = new wxBoxSizer(wxHORIZONTAL);
     text->SetEditable(false);
     text->WriteText("The documentation can be located on the official website:\n");

@@ -48,4 +48,6 @@ public:
 private:
 };
 
+bool ends_with(std::string const & value, std::string const & ending);
+
 #endif // EVENTLIST

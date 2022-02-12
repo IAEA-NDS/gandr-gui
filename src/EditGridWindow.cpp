@@ -16,7 +16,7 @@ enum {
 };
 
 GridEditDialog::GridEditDialog(const wxString & title, std::array<int, GRID_LEN> *iflex)
-    :wxDialog(NULL, wxID_ANY, "Covariance data", wxDefaultPosition, wxSize(200, 200),
+    :wxDialog(NULL, wxID_ANY, "Covariance data", wxDefaultPosition, wxSize(800, 800),
         wxRESIZE_BORDER | wxDEFAULT_DIALOG_STYLE | wxMAXIMIZE), iflex(iflex) {
     wxBoxSizer *mainSizer = new wxBoxSizer(wxVERTICAL);
     wxBoxSizer *topSizer = new wxBoxSizer(wxHORIZONTAL);

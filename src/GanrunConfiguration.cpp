@@ -110,7 +110,7 @@ void GanrunConfiguration::GenerateReactions(std::ostringstream &stream) {
     }
 }
 
-void GanrunConfiguration::GenerateExforCovData(std::ostringstream & stream) {
+int GanrunConfiguration::GenerateExforCovData(std::ostringstream & stream) {
     int edited_no = 0;
     for (int i = 0; i < ecov_data.size(); i++) {
 		if (ecov_data.at(i).edited)
@@ -118,7 +118,7 @@ void GanrunConfiguration::GenerateExforCovData(std::ostringstream & stream) {
     }
 
     if (edited_no >= ecov_data.size())
-        return;
+        return 0;
     ecov_data.at(edited_no).iglobl = 1;
     for (int i = 0; i <= edited_no; i++) {
         auto d = ecov_data.at(i);
@@ -132,6 +132,7 @@ void GanrunConfiguration::GenerateExforCovData(std::ostringstream & stream) {
         }
 		stream << "/ card 8 and 9, inca covmin irelco isys iglobl, xsys" << std::endl; //card 8, exfor cov data TODO
     }
+    return edited_no;
 }
 
 // This will be deprecated, as I only want to refer to exfor cov data by expno/inex
@@ -267,7 +268,7 @@ void GanrunConfiguration::generate_input() {
         // end card 7
 
         if (ecov_data.size()) {
-            GenerateExforCovData(grs);
+            if (!GenerateExforCovData(grs));
             
         }
 
@@ -351,10 +352,10 @@ void GanrunConfiguration::generate_input() {
         }
 
         if (ecov_data.size()) {
-            GenerateExforCovData(grs);
+            if (!GenerateExforCovData(grs)){
             grs << "/ card 8 and 9, inca covmin irelco isys iglobl, xsys" << std::endl; //card 8, exfor cov data TODO
+            }
         }
-        //grs << "/" << std::endl; //card 9, xsys for card 8 exfor cov
 
         if (igrid < 0) {
             GenerateReactions(grs);

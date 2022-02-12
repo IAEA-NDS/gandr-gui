@@ -200,7 +200,7 @@ public:
     void genLabel();
 
     void GenerateReactions(std::ostringstream & stream);
-    void GenerateExforCovData(std::ostringstream & stream);
+    int GenerateExforCovData(std::ostringstream & stream);
     void generate_input();
 
     std::string label = "Garnun";

@@ -70,16 +70,29 @@ void CalculationList::removeRun(int run_no) {
     }
 }
 
+bool ends_with(std::string const & value, std::string const & ending)
+{
+    if (ending.size() > value.size()) return false;
+    return std::equal(ending.rbegin(), ending.rend(), value.rbegin());
+}
+
 void CalculationList::saveRuns() {
     wxFileDialog
         saveFileDialog(this, _("Save configuration"), "", "",
             "Save files (*.sav)|*.sav", wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
     if (saveFileDialog.ShowModal() == wxID_CANCEL)
         return;     // the user changed idea...
-    std::ofstream os(std::string(saveFileDialog.GetPath() + ".sav"), std::ios::binary);
-    cereal::BinaryOutputArchive oarchive(os);
-    oarchive(runs);
-    os.close();
+    if (ends_with(std::string(saveFileDialog.GetPath()), ".sav")){
+        std::ofstream os(std::string(saveFileDialog.GetPath()), std::ios::binary);
+        cereal::BinaryOutputArchive oarchive(os);
+        oarchive(runs);
+        os.close();
+    } else {
+        std::ofstream os(std::string(saveFileDialog.GetPath() + ".sav"), std::ios::binary);
+        cereal::BinaryOutputArchive oarchive(os);
+        oarchive(runs);
+        os.close();
+    }
 }
 
 void CalculationList::loadRuns() {
