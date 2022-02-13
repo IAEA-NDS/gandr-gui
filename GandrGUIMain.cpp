@@ -64,6 +64,7 @@ END_EVENT_TABLE()
 GandrguiFrame::GandrguiFrame(wxFrame *frame, const wxString& title)
     : wxFrame(frame, -1, title) {
 
+    this->SetSize(wxSize(900, 400));
     wxPanel *panel = new wxPanel(this, wxID_ANY);
     wxBoxSizer *BoxSizerH = new wxBoxSizer(wxHORIZONTAL);
     wxBoxSizer *BoxSizerLeft = new wxBoxSizer(wxVERTICAL);
