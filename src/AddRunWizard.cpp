@@ -250,7 +250,7 @@ wxSetExforPage::wxSetExforPage(wxWizard *parent) : wxWizardPageSimple(parent) {
     if (wxFileExists(fileName) && wizard->config->imode == CLASSIC) {
         wizard->eReader->fileName = fileName;
         //readExperiments();
-		wxMessageBox("Loading values");
+		//wxMessageBox("Loading values");
 		loadValues();
     }
 }
@@ -347,20 +347,29 @@ void wxSetExforPage::onFinishEvent(wxWizardEvent & event) {
 
 void wxSetExforPage::advancedCovButtonClicked(wxCommandEvent & event) {
     exfor_cov_data data;
-    ExforCovDialog dialog("Edit global covariances", -1, 0, &data, 0);
+    try {
+        // protected code
+        ExforCovDialog dialog("Edit global covariances", -1, 0, &data, 0);
+            wxMessageDialog are_you_sure(this, "This will override all local options",
+        "Are you sure?", wxYES_NO | wxICON_EXCLAMATION);
+        if (are_you_sure.ShowModal() != wxID_YES)
+            return;
+        if (dialog.ShowModal() == wxID_OK) {
+            for (size_t i = 0; i < wizard->eReader->getTitles().size(); i++) {
+                wizard->config->ecov_data.at(i) = data;
+            }
+    }
+    } catch( const char* msg ) {
+        // code to handle  exception
+        std::cerr << msg;
+        wxMessageBox("Error loading data, re-define run");
+        return;
+    }
     if (wizard->eReader->getTitles().size() == 0) {
         wxMessageBox("No exfor data loaded!");
         return;
     }
-    wxMessageDialog are_you_sure(this, "This will override all local options",
-        "Are you sure?", wxYES_NO | wxICON_EXCLAMATION);
-    if (are_you_sure.ShowModal() != wxID_YES)
-        return;
-    if (dialog.ShowModal() == wxID_OK) {
-        for (size_t i = 0; i < wizard->eReader->getTitles().size(); i++) {
-            wizard->config->ecov_data.at(i) = data;
-        }
-    }
+
 }
 
 void wxSetExforPage::selectAllButtonClicked(wxCommandEvent & event) {
@@ -370,7 +379,16 @@ void wxSetExforPage::selectAllButtonClicked(wxCommandEvent & event) {
 
 void wxSetExforPage::onListItemDoubleClicked(wxCommandEvent & event) {
     //exfor_cov_data data = wizard->config->GetCovData(event.GetInt());
+    if (event.GetInt() >= wizard->config->ecov_data.size()) {
+        wxMessageBox("Error loading data, re-define experiment");
+        return;
+    } 
     exfor_cov_data data = wizard->config->ecov_data.at(event.GetInt());
+
+    if (event.GetInt() >= wizard->config->thinning.size()) {
+        wxMessageBox("Thinning values not defined");
+        return;
+    } 
     int thinning = wizard->config->thinning.at(event.GetInt());
     ExforCovDialog dialog("Edit local covariances and data thinning", event.GetInt(), 
         wizard->eReader->experiments[event.GetInt()].d_energy.size(), &data, &thinning);

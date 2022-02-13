@@ -324,7 +324,7 @@ public:
             matnam, mtplot,
             igrid, imoc, ipend, inmt5, iltest,
             thin, iflex,
-            ecov_data,
+            ecov_data, thinning,
             mte, mfe, idx1, idx2,
             target_iza, tproj,
             xexpra,
